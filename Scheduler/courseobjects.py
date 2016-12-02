@@ -1,4 +1,11 @@
-''' creates the objects for a course '''
+''' creates the objects for a course
+
+TO-DO:
+reformat fetchcourses.py to split start & end times? OR
+just indicate where to start reading characters in table
+
+'''
+
 
 class Course(object):
     def __init__(self, dept, num, title):
