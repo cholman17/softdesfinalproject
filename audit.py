@@ -1,13 +1,12 @@
 import fnmatch
-response = raw_input("please enter your classes taken by course code separated by a space ex: 'FME1000 FME1001 ECN2000'")
-
-req = []
-f = open('babson_requirements.csv')
-for line in f:
-    line = line.split()
-    req.append(line)
 
 def audit():
+    req = []
+    f = open('babson_requirements.csv')
+    for line in f:
+        line = line.split()
+        req.append(line)
+
     remaining = []
     classes = response.split()
     have = classes
