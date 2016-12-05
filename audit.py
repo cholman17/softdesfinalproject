@@ -1,6 +1,6 @@
 import fnmatch
 
-def audit():
+def audit(response):
     req = []
     f = open('babson_requirements.csv')
     for line in f:
