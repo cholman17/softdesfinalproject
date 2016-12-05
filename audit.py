@@ -26,4 +26,4 @@ def audit(response):
         if is_present == False:
             remaining.append(code_lst)
 
-    print remaining
+    return remaining
