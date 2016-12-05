@@ -27,6 +27,3 @@ def audit(response):
             remaining.append(code_lst)
 
     print remaining
-
-
-audit()
