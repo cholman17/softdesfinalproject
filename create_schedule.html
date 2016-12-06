@@ -11,16 +11,7 @@
     what classes you need to take, and sample schedules as well! Currently this tool
     is meant for students studying at Babson College!</p>
 
-    <p> Thanks for entering your classes. These are the classes you have left to take:</p>
+    <p> Thanks for choosing to determine a schdule. Here is a sample schedule for you:</p>
 
-    <ul>
-      {% for req in response %}
-      <li>
-        {% for course in req %}
-        {{course}}
-        {% endfor %}
-      </li>
-      {% endfor %}
-    </ul>
-
-<input type="submit" value="Schedule a class">
+    <p>{{response}}</p>
+    
