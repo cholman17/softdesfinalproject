@@ -1,4 +1,4 @@
-'''  PART 2
+'''  ATTEMPT #2 -- making a class
 fetches course listings and places into txt file
 '''
 import urllib2
@@ -11,14 +11,17 @@ from courseobjects import *
 base_url = "https://fusionmx.babson.edu/CourseListing/index.cfm?fuseaction=CourseListing.DisplayCourseListing&blnShowHeader=false&program=Undergraduate&semester=Spring+2017&sort_by=course_number&btnSubmit=Display+Courses"
 filename = "courseListing.txt"
 
+courseObj = Course()
+
 class Information(object):
-    def __init__(self): pass
+    def __init__(self):
         self.courseNum = []
         self.courseTitle = []
         self.courseDay = []
         self.courseTime = []
         self.courseProf = []
         self.courseCredits = []
+        self.allCourses - []
 
     def getCourseInfo(....): #which variables?
         f = open(filename,"w")
@@ -70,18 +73,27 @@ class Information(object):
 
         f.close()
 
-        allCourses= zip(courseNum,courseTitle,courseDay,courseTime,courseProf,courseCredits)
-
         FILE = open("AllCourses.csv", "w")
         for i in xrange(len(courseNum)):
             FILE.write("{};{};{};{};{}\n".format(courseNum[i],courseTitle[i],courseDay[i],courseTime[i],courseProf[i]))
         FILE.close
 
-    def parseCourseInfo(....):
-        pass
+    def parseCourseInfo(....): #
+        ''' sets up list of objects '''
+        allCourses.append( courseObj(courseNum, courseTitle, courseDay, courseTime, courseProf) )
 
     def parse SectionInfo(...):
+
         pass
 
     def parseLabInfo(....):
+
         pass
+
+#allCourses= zip(courseNum,courseTitle,courseDay,courseTime,courseProf,courseCredits)
+def main():
+    Information.getCourseInfo()
+    Information.parseCourseInfo()
+    print allCourses[:3]
+
+main()

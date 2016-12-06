@@ -1,4 +1,4 @@
-''' creates the objects for a course
+'''creates the objects for a course
 
 TO-DO:
 reformat fetchcourses.py to split start & end times? OR
@@ -8,34 +8,42 @@ just indicate where to start reading characters in table
 
 
 class Course(object):
-    def __init__(self, dept, num, title):
-        '''constructs the course '''
-        self.dept = str(dept)
-        self.Num = str(num)
-        self.Title = str(title)
+    def __init__(self, num, title, day, timeperiod, prof): #add credits, startTime, endTime
+        #constructs the course
+        #self.dept = str(dept)
+        self.num = str(num)
+        self.title = str(title)
+        self.timeperiod = str(timeperiod)
         self.sections = []
+        self.prof = str(prof)
+        self.day = str(day)
 
+    def __repr__(self):
+        #return '%s: %s, %s, %s, %s, %s' % (num, title, day, timeperiod, prof)
+        return self.num
+        
     def findTitle(self):
-        ''' returns the string for courseTitle '''
-        return self.Title
+        #returns the string for courseTitle
+        return self.title
 
     def findDept(self):
-        ''' return the department name'''
+        #return the department name'''
         return self.dept
 
     def findNum(self):
-        ''' find course number '''
-        return self.Num
+        #find course number '''
+        return self.num
 
     def findSections(self):
-        ''' return list of sections '''
+        #return list of sections '''
+        pass
 
     def SectionsTotal(self):
-        ''' displays number of sections offered'''
+        #displays number of sections offered'''
         return len(self.sections)
 
     def addSection(self,section):
-        '''add to list of sections for specific course '''
+        #add to list of sections for specific course '''
         if type(section) == Section:
             self.sections.append(section)
             return True
@@ -49,7 +57,7 @@ class Course(object):
 
     def setupSections(self,newSections):
         self.sections = newSections
-
+'''
 class Classtime(object):
     def __init__(self,name,timeslot):
         self.name = str(name)
@@ -134,3 +142,5 @@ class Timeslot(object):
         time2 = time2.strftime("%H:%M %p")
         time2 = time2[:-3]
         print time2
+
+'''

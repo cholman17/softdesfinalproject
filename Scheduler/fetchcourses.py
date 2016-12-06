@@ -4,61 +4,13 @@ from bs4 import BeautifulSoup
 import re
 import csv
 from itertools import izip
-#from courseobjects import *
-#from courseobjects import Course
+import fnmatch
+from courseobjects import *
+from courseobjects import Course
 
-#courseObj = Course()
-# I think we should make all one object class (Information)
+#Should make all one object class (Information)?
 #def __init__(self): pass
 #def getCourseInfo(....):
-class Course(object):
-    def __init__(self, num, title, day, timeperiod, prof): #add credits, startTime, endTime
-        '''constructs the course '''
-        #self.dept = str(dept)
-        self.num = str(num)
-        self.title = str(title)
-        self.timeperiod = str(timeperiod)
-        self.day = str(day)
-        self.sections = []
-        self.prof = str(prof)
-
-    def __repr__(self):
-        return '%s: %s, %s, %s, %s \n' % (self.num, self.title, self.day, self.timeperiod, self.prof)
-
-    def findTitle(self):
-        ''' returns the string for courseTitle '''
-        return self.title
-
-    def findDept(self):
-        ''' return the department name'''
-        return self.dept
-
-    def findNum(self):
-        ''' find course number '''
-        return self.num
-
-    def findSections(self):
-        ''' return list of sections '''
-
-    def SectionsTotal(self):
-        ''' displays number of sections offered'''
-        return len(self.sections)
-
-    def addSection(self,section):
-        '''add to list of sections for specific course '''
-        if type(section) == Section:
-            self.sections.append(section)
-            return True
-        return False
-
-    def deleteSection(self, section):
-        self.sections.remove(section)
-        if len(self.sections) == 0:
-            return -1
-        return 0
-
-    def setupSections(self,newSections):
-        self.sections = newSections
 
 filename = "courseListing.txt"
 f = open(filename,"w")
@@ -121,13 +73,39 @@ def getCourseInfo():
 
     f.close()
 
-#allCourses= zip(courseNum,courseTitle,courseDay,courseTime,courseProf,courseCredits)
+    FILE = open("AllCourses.csv", "w")
+    for i in xrange(len(courseNum)):
+        FILE.write("{};{};{};{};{}\n".format(courseNum[i],courseTitle[i],courseDay[i],courseTime[i],courseProf[i]))
+    FILE.close
 
-FILE = open("AllCourses.csv", "w")
-for i in xrange(len(courseNum)):
-    FILE.write("{};{};{};{};{}\n".format(courseNum[i],courseTitle[i],courseDay[i],courseTime[i],courseProf[i]))
-FILE.close
+#filter.fnmatch(names, pattern) #comparinng codes to courseList
+#iterate for the each/length of classes leftover
+#matches = [] #list of section lists
+def findMatch(reqs):
+    for code in reqs: #iterate for each requirement
+        results = filter(lambda x:str(code) in x.num, allCourses)
+        print 'Found %s sections for course: %s' % (len(results), code)
+        match.append(results)
+    for x in range(len(match)):
+            print '\n'
+            print match[x]
 
+def filtering(): # the list, attribute, criteria
+    #search through list of objects to group sections together
+    b = raw_input('What do you want to filter by: num, title, day, time, prof? ')
+    c = raw_input('What is the criteria?: ')
+    #d = [] #list of section lists
+    #for x in xrange(len(a)):
+    try:
+        results = filter(lambda x:str(c) in getattr(x,b), allCourses)
+        print 'Found %s classes for %s: %s' % (len(results), b, c)
+    except NameError:
+        print 'Wrong property! Try again.'
+        #d.append(results)
+
+#file_reqs = open()
+needed = ['ACC1000', 'FME1000', 'CVA2034', 'ECN2000'] #change to open(file_reqs)
+match = []
 
 def main():
     getCourseInfo()
@@ -136,5 +114,8 @@ def main():
     print 'Made course objects'
     print len(allCourses)
     print allCourses[:3]
+    filtering()
+    print 'Matching'
+    findMatch(needed)
 
 main()
