@@ -82,8 +82,8 @@ class Scheduler(object):
 	def Nothing(self):
 		#shows error message when no possible schedules
 
-
 class Timetable(object):
+
 	def __init__(self, registered, preferences):
 		self.classes = registered
 		self.score = preferences(self)
