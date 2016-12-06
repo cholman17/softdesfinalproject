@@ -107,24 +107,27 @@ def findMatch(reqs):
     for x in range(len(match)):
             #return match[x]
             return match[x]
+    return match
 
-def filtering(): # the list, attribute, criteria
+def filtering(b,c): # the list, attribute, criteria
     #search through list of objects to group sections together
-    b = raw_input('What do you want to filter by: num, title, day, time, prof? ')
-    c = raw_input('What is the criteria?: ')
+    '''b = raw_input('What do you want to filter by: num, title, day, time, prof? ')
+    c = raw_input('What is the criteria?: ')'''
     #d = [] #list of section lists
     #for x in xrange(len(a)):
+    b = str(b)
     try:
         results = filter(lambda x:str(c) in getattr(x,b), allCourses)
         print 'Found %s classes for %s: %s' % (len(results), b, c)
     except NameError:
         print 'Wrong property! Try again.'
         #d.append(results)
+    return results
 
-def fetchAll():
+def fetchAll(b,c):
     leftovers = thefile.read().split()
     print len(leftovers)
 
     getCourseInfo()
     findMatch(leftovers)
-    filtering()
+    filtering(b,c)
