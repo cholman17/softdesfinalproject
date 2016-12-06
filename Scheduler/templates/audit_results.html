@@ -26,30 +26,26 @@
     <p> These are the classes available this semster to satisfy your remaining classes:</p>
     <ul>
       {% for item in match %}
-      <li>
         {% for course in item %}
-        <li>
+          <li>
           {% for code in course %}
           {{code}}
           {% endfor %}
-        </li>
+          </li>
         {% endfor %}
-      </li>
       {% endfor %}
     </ul>
 
     <p> Based on your listed preference, here are ALL the classes available this semester:</p>
     <ul>
       {% for found in filter %} <!---[ [a1..aN], [b1...bN]....] -->
-      <li>
         {% for course in found %} <!--- [a1....aN] -->
-        <li>
+          <li>
           {% for code in course %}
           {{code}}
           {% endfor %}
-        </li>
+          </li>
         {% endfor %}
-      </li>
       {% endfor %}
     </ul>
 <input type="submit" value="Create a schedule!">

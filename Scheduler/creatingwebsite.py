@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import fnmatch
+import fetchcourses
 from audit import audit
-from fetchcourses import *
 from re import split
 
 app=Flask(__name__)
@@ -25,7 +25,7 @@ def get_classes():
     #print c
     #print '************* FOUND c ************'
 
-    everything = fetchAll(b,c)
+    everything = fetchcourses.fetchAll(b,c)
     matches = everything[0]
     #print matches[:-3]
     print '__________ FILTER LENGTH___________'

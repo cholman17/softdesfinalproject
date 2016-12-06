@@ -4,11 +4,12 @@ from bs4 import BeautifulSoup
 import re
 import csv
 from itertools import izip
+from itertools import groupby
+
 from audit import *
 from creatingwebsite import *
 from courseobjects import *
 from courseobjects import Course
-from itertools import groupby
 
 #Should make all one object class (Information)?
 #def __init__(self): pass
