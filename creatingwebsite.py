@@ -11,8 +11,8 @@ def index():
 @app.route('/audit_results', methods=['POST'])
 def get_classes():
     response = request.form["response"].encode('utf-8')
-    audit(response)
-    return render_template('audit_results.html')
+    remaining = audit(response)
+    return render_template('audit_results.html',response=remaining)
 
 if __name__ == '__main__':
     app.run()
