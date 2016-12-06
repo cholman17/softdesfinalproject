@@ -26,12 +26,13 @@ def audit(response):
 		        			have = have[:i]+ have[i+1:]
 		        			break
 		    			break
+
 		if is_present == False:
 	    		remaining.append(code_lst)
-
-	return remaining
-
-	for item in still_need:
+				#still_need.append(code_lst)
+	for item in remaining:
 		for code in item:
 			thefile.write("%s \n" % code)
 	thefile.close()
+	
+	return remaining

@@ -2,7 +2,6 @@
 from audit import *
 from courseobjects import *
 from fetchcourses import *
-#from schedulecourses import *
 from creatingwebsite import *
 
 def main():
@@ -10,10 +9,9 @@ def main():
     app.run()
 
     print '++++++++ GRAB INFO ++++++++'
-    getCourseInfo()
-    print '\n++++++++++ FILTERS +++++++++++'
-    filtering()
-    print '++++++++++ MATCHES +++++++++++'
-    findMatch(response)
+    took = raw_input('List of classes you have taken, separate by space, e.g. FME1000 FME1001: \n')
+    audit(took)
+    print '\n++++++++++ FILTER & MATCH +++++++++++'
+    fetchAll()
 
 main()

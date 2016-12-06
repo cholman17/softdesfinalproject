@@ -20,8 +20,7 @@ base_url = "https://fusionmx.babson.edu/CourseListing/index.cfm?fuseaction=Cours
 page = urllib2.urlopen(base_url)
 soup = BeautifulSoup(page, "lxml")
 
-leftovers = thefile.read().split() #['ACC1000', 'FME1000', 'CVA2034', 'ECN2000'] #change to open(file_reqs)
-print len(leftovers)
+#leftovers = thefile.read().split() #['ACC1000', 'FME1000', 'CVA2034', 'ECN2000'] #change to open(file_reqs)
 
 #print soup.prettify()
 courseNum = []
@@ -33,8 +32,10 @@ courseCredits = []
 allCourses = []
 
 match = []
+leftovers = []
 
 def getCourseInfo():
+
     tables = soup.findChildren('table')
     courseListing = tables[1]
     rows = courseListing.findChildren('tr', {"valign" : "top"})
@@ -93,16 +94,18 @@ def getCourseInfo():
 #filter.fnmatch(names, pattern) #comparinng codes to courseList
 #iterate for the each/length of classes leftover
 #matches = [] #list of section lists
-def findMatch(response):
-
+def findMatch(reqs):
 
     charstoremove = ['[',']','.','"','?','!']
     for code in reqs: #iterate for each requirement
         ##new = code.translate(None,''.join(charstoremove)
         results = filter(lambda x:str(code) in x.num, allCourses)
-        print 'Found %s sections for course: %s' % (len(results), code)
-        match.append(results)
+        if results:
+            print '\n Found %s section(s) for course: %s' % (len(results), code)
+            match.append(results)
+            print results
     for x in range(len(match)):
+            #return match[x]
             return match[x]
 
 def filtering(): # the list, attribute, criteria
@@ -117,3 +120,11 @@ def filtering(): # the list, attribute, criteria
     except NameError:
         print 'Wrong property! Try again.'
         #d.append(results)
+
+def fetchAll():
+    leftovers = thefile.read().split()
+    print len(leftovers)
+
+    getCourseInfo()
+    findMatch(leftovers)
+    filtering()
