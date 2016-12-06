@@ -6,14 +6,14 @@ from fetchcourses import *
 from creatingwebsite import *
 
 def main():
-    print '+++++++ AUDITING ++++++++'
-    audit()
+    print '+++++++++ WEBSITE +++++++++++'
+    app.run()
+
     print '++++++++ GRAB INFO ++++++++'
     getCourseInfo()
-    print '++++++++++ FILTERS +++++++++++'
+    print '\n++++++++++ FILTERS +++++++++++'
     filtering()
     print '++++++++++ MATCHES +++++++++++'
-    findMatch(leftovers)
-    app.run()
+    findMatch(response)
 
 main()

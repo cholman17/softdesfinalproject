@@ -5,7 +5,7 @@ import re
 import csv
 from itertools import izip
 from audit import *
-#from audit import audit
+from creatingwebsite import *
 from courseobjects import *
 from courseobjects import Course
 
@@ -93,7 +93,9 @@ def getCourseInfo():
 #filter.fnmatch(names, pattern) #comparinng codes to courseList
 #iterate for the each/length of classes leftover
 #matches = [] #list of section lists
-def findMatch(reqs):
+def findMatch(response):
+
+
     charstoremove = ['[',']','.','"','?','!']
     for code in reqs: #iterate for each requirement
         ##new = code.translate(None,''.join(charstoremove)
@@ -101,7 +103,7 @@ def findMatch(reqs):
         print 'Found %s sections for course: %s' % (len(results), code)
         match.append(results)
     for x in range(len(match)):
-            print match[x]
+            return match[x]
 
 def filtering(): # the list, attribute, criteria
     #search through list of objects to group sections together
