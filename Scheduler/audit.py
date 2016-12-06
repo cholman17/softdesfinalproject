@@ -34,5 +34,6 @@ def audit(response):
 		for code in item:
 			thefile.write("%s \n" % code)
 	thefile.close()
-	
+
+	print 'FINISHED AUDIT \n'
 	return remaining

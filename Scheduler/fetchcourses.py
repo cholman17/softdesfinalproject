@@ -8,6 +8,7 @@ from audit import *
 from creatingwebsite import *
 from courseobjects import *
 from courseobjects import Course
+from itertools import groupby
 
 #Should make all one object class (Information)?
 #def __init__(self): pass
@@ -31,7 +32,7 @@ courseProf = []
 courseCredits = []
 allCourses = []
 
-match = []
+matched = []
 leftovers = []
 
 def getCourseInfo():
@@ -102,12 +103,12 @@ def findMatch(reqs):
         results = filter(lambda x:str(code) in x.num, allCourses)
         if results:
             print '\n Found %s section(s) for course: %s' % (len(results), code)
-            match.append(results)
+            matched.append(results)
             print results
-    for x in range(len(match)):
-            #return match[x]
-            return match[x]
-    return match
+    '''for x in range(len(matched)):
+            return matched[x]
+            print matched[x]'''
+    return matched
 
 def filtering(b,c): # the list, attribute, criteria
     #search through list of objects to group sections together
@@ -119,15 +120,41 @@ def filtering(b,c): # the list, attribute, criteria
     try:
         results = filter(lambda x:str(c) in getattr(x,b), allCourses)
         print 'Found %s classes for %s: %s' % (len(results), b, c)
+        res = [list(g) for k, g in groupby(results, key=lambda x: x.num[:7])]
     except NameError:
         print 'Wrong property! Try again.'
         #d.append(results)
-    return results
+    #return results
+    return res
 
 def fetchAll(b,c):
     leftovers = thefile.read().split()
     print len(leftovers)
 
+    match = [] #pulled down
+    filters = []
+    allThings= []
+    elseThings = []
+
     getCourseInfo()
+
     findMatch(leftovers)
+    match = findMatch(leftovers)
+    allThings.append(match)
+
+    print '__________ MATCHES FOUND _____________'
+    for code in match:
+        print code
+
     filtering(b,c)
+    filters = filtering(b,c)
+    elseThings.append(filters)
+    print '_____________ FILTERS FOUND ____________'
+    print len(filters)
+
+    everything = []
+    everything.append(allThings)
+    everything.append(elseThings)
+
+    print type(everything)
+    return everything
