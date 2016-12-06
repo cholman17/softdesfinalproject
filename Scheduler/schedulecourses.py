@@ -4,14 +4,15 @@ from fetchcourses import *
 ''' TO DO: separate file for flask --> setup timetable visuals;
  ==> Import all modules into one main.py file
 '''
-'''
+
+"""
 CSV to List of course objects == List of audits needed:
 --> list of lists: [[FME1000-01, 02....], [CS-01, 02], [C3]...]
 *Problem Solver: loop thru A01, B01, C01 until no time conflicts
     ^No priority?
     ^List of candidates/possibiliteis
     ^Return first one that runs True
-''''
+"""
 
 class Scheduler(object):
 	def __init__(self,codes,semester, options, timeperiod):

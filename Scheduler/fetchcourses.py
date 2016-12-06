@@ -4,20 +4,24 @@ from bs4 import BeautifulSoup
 import re
 import csv
 from itertools import izip
-import fnmatch
+from audit import *
+#from audit import audit
 from courseobjects import *
 from courseobjects import Course
 
 #Should make all one object class (Information)?
 #def __init__(self): pass
 #def getCourseInfo(....):
-
 filename = "courseListing.txt"
+thefile = open("remaining.txt","r")
 f = open(filename,"w")
 
 base_url = "https://fusionmx.babson.edu/CourseListing/index.cfm?fuseaction=CourseListing.DisplayCourseListing&blnShowHeader=false&program=Undergraduate&semester=Spring+2017&sort_by=course_number&btnSubmit=Display+Courses"
 page = urllib2.urlopen(base_url)
 soup = BeautifulSoup(page, "lxml")
+
+leftovers = thefile.read().split() #['ACC1000', 'FME1000', 'CVA2034', 'ECN2000'] #change to open(file_reqs)
+print len(leftovers)
 
 #print soup.prettify()
 courseNum = []
@@ -27,6 +31,8 @@ courseTime = []
 courseProf = []
 courseCredits = []
 allCourses = []
+
+match = []
 
 def getCourseInfo():
     tables = soup.findChildren('table')
@@ -54,7 +60,7 @@ def getCourseInfo():
         try:
             time = dates[1].replace(" ","")
         except (IndexError, TypeError, ValueError):
-            time = str("N?A")
+            time = str("")
 
         courseDay.append(day)
         courseTime.append(time)
@@ -78,16 +84,23 @@ def getCourseInfo():
         FILE.write("{};{};{};{};{}\n".format(courseNum[i],courseTitle[i],courseDay[i],courseTime[i],courseProf[i]))
     FILE.close
 
+    for x in range(len(courseNum)):
+        allCourses.append( Course(courseNum[x], courseTitle[x], courseDay[x], courseTime[x], courseProf[x]) )
+    print 'Made course objects'
+    print len(allCourses)
+    print allCourses[:3]
+
 #filter.fnmatch(names, pattern) #comparinng codes to courseList
 #iterate for the each/length of classes leftover
 #matches = [] #list of section lists
 def findMatch(reqs):
+    charstoremove = ['[',']','.','"','?','!']
     for code in reqs: #iterate for each requirement
+        ##new = code.translate(None,''.join(charstoremove)
         results = filter(lambda x:str(code) in x.num, allCourses)
         print 'Found %s sections for course: %s' % (len(results), code)
         match.append(results)
     for x in range(len(match)):
-            print '\n'
             print match[x]
 
 def filtering(): # the list, attribute, criteria
@@ -102,20 +115,3 @@ def filtering(): # the list, attribute, criteria
     except NameError:
         print 'Wrong property! Try again.'
         #d.append(results)
-
-#file_reqs = open()
-needed = ['ACC1000', 'FME1000', 'CVA2034', 'ECN2000'] #change to open(file_reqs)
-match = []
-
-def main():
-    getCourseInfo()
-    for x in range(len(courseNum)):
-        allCourses.append( Course(courseNum[x], courseTitle[x], courseDay[x], courseTime[x], courseProf[x]) )
-    print 'Made course objects'
-    print len(allCourses)
-    print allCourses[:3]
-    filtering()
-    print 'Matching'
-    findMatch(needed)
-
-main()
