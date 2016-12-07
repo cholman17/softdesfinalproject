@@ -1,123 +1,149 @@
-import copy, random
+''' COMPUTE THE SCHEDULE '''
+import fetchcourses
 from fetchcourses import *
+import itertools
+from itertools import groupby
+from courseobjects import *
+import pprint
+import random
 
-''' TO DO: separate file for flask --> setup timetable visuals;
- ==> Import all modules into one main.py file
+'''
+DONT FORGET: How to implement '???' classes for matches/remaining
+
+(1) using matches --> list of potential schedules of 5 classes
+    - import itertools
+    - import fetchcourses
+    - simple string == clause
+
+(2) add rule to check for course.time attribute
+    - need to setup startTime and endTime attributes ==> Course()
+
+(3) add stressLevel (points) --> rule factor for randomization
+
 '''
 
-"""
-CSV to List of course objects == List of audits needed:
---> list of lists: [[FME1000-01, 02....], [CS-01, 02], [C3]...]
-*Problem Solver: loop thru A01, B01, C01 until no time conflicts
-    ^No priority?
-    ^List of candidates/possibiliteis
-    ^Return first one that runs True
-"""
+list_op = [] #not sure yet
+#section = raw_input('Enter all the sections of a course: ')
+def simpleRand(listSections, tot): #listSections): #list of lists (sections)
+    new = []
+    potential = []
+    options = []
+    SectionS = []
+    lazy = None
 
-class Scheduler(object):
-	def __init__(self,codes,semester, options, timeperiod):
+    for lst in listSections:
+        for code in lst:
+            for item in code:
+                for label in item:
+                    pass
 
-		pass
+    print '++++++++++ STRING ++++++++++++++'
+    a=0
+    for lst[0] in listSections[0]:
+        for code[0] in lst[0]:
+            for item in code[0]:
+                if a < 3:
+                    a += 1
+                    '''print '00000000000000000000000000000000000000'
+                    print item.num'''
+                    lazy = item
+                else: break
+            break
+        break
 
-	def startschedule(self):
+    print str(type(lazy)) ##<class 'courseobjects.Course'>
+    if  '<cla' in str(type(lazy)):
+        print '+++++++ TRUE: COURSE OBJECT+++++++++++'
+        for n in listSections: #[ [p p p ], [m m m ], [o,o o] ]
+            for m in n: #[ p p p ]
+                for item in m:
+                    for label in item:
+                        new.append(label)
+                        SectionS.append(label.num)
+            print 'CHECKING SEPARATOR'
+            #SectionS.append(item.num)
+            #print SectionS[0:2]
 
+    SectionS = [ list(g) for k, g in groupby(SectionS, key=lambda x: x[:8]) ]
+    #print SectionS[0]
 
-		pass
+    print '++++ FINDING COMBINATIONS +++++'
+    sample = random.sample(SectionS,10)
+    print sample[0]
 
-	def findtimetable(self, index):
+    randomSlots = random.sample(range(0, len(sample)), 5) #10, 12, 30, 31, 34, 50
+    #print randomSlots
+    print sample[randomSlots[0]]
 
-		pass
+    Combo = list(itertools.product( sample[i] for i in randomSlots) )
+    print Combo[0]
+    #pprint.pprint(Combo)
+    print '++++ FOUND COMBINATIONS +++++'
 
-	def update(self, timetable):
+    combo = sorted( Combo, key=lambda x:x[0] ) #combo.sort(key=lambda x: x[0])
+    #print combo[0]
 
-		pass
+    for code in combo: #
+        for item in code: #List of CourseNum
+            for label in item:
+                print label #COURSE NUM
+    print len(combo[0])
 
-	def findcourseinfo(self):
+    looK = []
+    for codes in tot:
+        for code in codes:
+            looK.append(code)
+    print looK[0]
 
-		pass
+    look = []
+    for items in looK:
+        look.append(items)
+    print len(look)
+    print type(look[0]) #objct course !!
 
-	def rateAll(self, prefs):
+    for code in combo: #iterate for each requirement
+        for item in code: ##new = code.translate(None,''.join(charstoremove)
+            for label in item:
+                src = label
+                print type(src)
+                print '+++++++++allCourses+++++++++'
+                res = filter(lambda x:str(src) in x.num, look)
+                if res:
+                    print '\n Found %s MATCH in allCourses' % (len(res))
+                    list_op.append(res)
+    print len(list_op)
 
-		pass
+    print '      ++++++++++ COMBO +++++++++++++++        '
 
-	def loopSection(self, recursion, opp, prefs):
+    y = 0
+    selec = random.sample(list_op, 5)
+    for item in selec:
+        for ids in item:
+            print ids.num
+    options.append(selec)
+    potential.append(options)
 
-		pass
+    print '+++++++++++++++ OPTIONS[i] ++++++++++++++'
 
-	def loopLab(self, recursion, opp, sections, prefs):
+    a=0
+    dets =[]
+    for lst in options:
+        for ids in lst:
+            for labels in ids:
+                print '\n '
+                print labels.num
+                b = str(Course.showdets(labels))
+                dets.append(b)
+    print len(dets)
+    for n in dets:
+        print n
+    return dets
 
-		pass
+listSec = [ #for texting
 
-	def noPref(self, x=None):
-		return random.rantint(0,99)
+                ['ACC1000-01 ACC1000-02 ACC1000-03 ACC1000-04 ACC1000-05 ACC1000-06 ACC1000-07 ACC1000-08 ACC1000-09 ACC1000-10 ACC1000-11'],
+                ['LAW1000-01 LAW1000-02 LAW1000-03 LAW1000-04 LAW1000-05 LAW1000-06 LAW1000-07 LAW1000-08 LAW1000-09 LAW1000-10 LAW1000-11'],
+                ['QTM1000-01 QTM1000-02 QTM1000-03 QTM1000-04 QTM1000-05'], ['RHT1000-01 RHT1000-02 RHT1000-03 RHT1000-04 RHT1000-05'],
+                ['FYS1000-01 FYS1000-02 FYS1000-03'], ['SME2041-01'], ['QTM2000-01 QTM2000-02 QTM2000-03']
 
-	def morningClass(self, timetable):
-
-		pass
-
-	def eveningClass(self, timetable):
-
-		pass
-
-	def filterTimeperiod(self):
-
-		pass
-
-	def filterDay(self):
-
-		pass
-
-	def applyFilter(self,filtering, filterVar):
-
-
-		pass
-
-	def timeFilter(self,classtime,var):
-
-		pass
-
-	def dayFilter(self, classtime, restday):
-		pass
-
-	def Nothing(self):
-		#shows error message when no possible schedules
-
-class Timetable(object):
-
-	def __init__(self, registered, preferences):
-		self.classes = registered
-		self.score = preferences(self)
-
-	def calcScore(self):
-		return self.score
-	def registered(self):
-		return self.classes
-	def makeString(self):
-		string = ""
-		for c in self.classes:
-			#string += #shows details to User in one long string
-		return string
-
-class onlineSchedule(object):
-	def __init__(self, totalCourses):
-		self.days = {}
-		self.days['M'] = []
-		self.days['T'] = []
-		self.days['W'] = []
-		self.days['R'] = []
-		self.days['F'] = []
-		self.classes = []
-
-	def addCourse(self, classtime):
-		#interval time?
-		#interval =
-
-		#make sure no conflicting timeslots
-		for day in classtime.findDays():
-			if len()[i in intervals if i in self.days[day]]) > 0:
-				return False
-
-		#add intervals to respective days, return True
-
-	def toRegister(self):
-		return copy.deepcopy(self.classes)
+                ]

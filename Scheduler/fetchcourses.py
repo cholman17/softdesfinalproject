@@ -6,8 +6,8 @@ import csv
 from itertools import izip
 from itertools import groupby
 
-from audit import *
-from creatingwebsite import *
+from audit import * #don't think this is needed
+from creatingwebsite import * #not needed either
 from courseobjects import *
 from courseobjects import Course
 

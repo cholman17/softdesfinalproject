@@ -18,10 +18,12 @@ class Course(object):
         self.prof = str(prof)
         self.day = str(day)
 
-    def __repr__(self):
-        #return '%s: %s, %s, %s, %s, %s' % (num, title, day, timeperiod, prof)
+    def showdets(self):
+        return '%s: %s, %s, %s, %s' % (self.num, self.title, self.day, self.timeperiod, self.prof)
+
+    def __str__(self):
         return self.num
-        
+
     def findTitle(self):
         #returns the string for courseTitle
         return self.title

@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+<style>
+li {
+  white-space: normal;;
+}
+
+</style>
+</head>
 <body>
 
 <hl style="color:blue;font-size:200%;">SMARTScheduler</hl>
@@ -11,7 +19,32 @@
     what classes you need to take, and sample schedules as well! Currently this tool
     is meant for students studying at Babson College!</p>
 
-    <p> Thanks for choosing to determine a schdule. Here is a sample schedule for you:</p>
+    <p> Thanks for choosing to determine a schdule. Here are sample schedules for you:</p>
+
+    <ul>
+    {% for found in sets%}
+        <li>
+            {% for code in found %}
+            {{code}}
+            {% endfor %}
+        </li>
+    {% endfor %}
+  </ul>
+
+
+    <!---<ul>
+      {% for found in sets%}
+        {% for ids in found%}
+          <li>
+            {% for made in ids %}
+              {% for code in made %}
+              {{code}}
+              {% endfor %}
+            {% endfor %}
+          </li>
+        {% endfor %}
+      {% endfor %}
+    </ul> -->
+
 
     <p>{{response}}</p>
-    
