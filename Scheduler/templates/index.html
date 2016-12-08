@@ -13,14 +13,18 @@
 
 <form action="audit_results" method="POST">
   Course Codes:<br>
-  <input type="text" name="response" placeholder="Input text like FME1000 RHT1000"><br>
+  <input type="text" name="response" placeholder="Input text like FME1000 RHT1000"><br/>
   <!-- <input type="submit" value="Submit"> -->
 
 <!-- </form>
 
 <form action="audit_results" method="POST"> -->
   Filters:<br>
-  <input type="text" name="cat" placeholder="Filter by: num, title, day, time, prof?"><br>
+  <input type="radio" name="cat" value="num"> Course Code<br>
+  <input type="radio" name="cat" value="title"> Title <br>
+  <input type="radio" name="cat" value="day"> Day<br>
+  <input type="radio" name="cat" value="timeperiod"> Time<br>
+  <input type="radio" name="cat" value="prof"> Professor<br/>
   <input type="text" name="label" placeholder="Criteria or label?"><br>
   <input type="submit" value="Submit">
 </form>
