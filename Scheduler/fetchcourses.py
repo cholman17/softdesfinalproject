@@ -14,9 +14,6 @@ from courseobjects import Course
 #Should make all one object class (Information)?
 #def __init__(self): pass
 #def getCourseInfo(....):
-filename = "courseListing.txt"
-thefile = open("remaining.txt","r")
-f = open(filename,"w")
 
 base_url = "https://fusionmx.babson.edu/CourseListing/index.cfm?fuseaction=CourseListing.DisplayCourseListing&blnShowHeader=false&program=Undergraduate&semester=Spring+2017&sort_by=course_number&btnSubmit=Display+Courses"
 page = urllib2.urlopen(base_url)
@@ -26,9 +23,11 @@ soup = BeautifulSoup(page, "lxml")
 
 #print soup.prettify()
 courseNum = []
+courseSect = []
 courseTitle = []
 courseDay = []
-courseTime = []
+courseStart = []
+courseEnd = []
 courseProf = []
 courseCredits = []
 allCourses = []
@@ -37,6 +36,9 @@ matched = []
 leftovers = []
 
 def getCourseInfo():
+    filename = "courseListing.txt"
+    thefile = open("remaining.txt","r")
+    f = open(filename,"w")
 
     tables = soup.findChildren('table')
     courseListing = tables[1]
@@ -47,7 +49,13 @@ def getCourseInfo():
         for hit in row.findChildren('td', {"width": "85"}):
             #print hit.contents[0].strip()
             Num = hit.contents[0].strip()
-            courseNum.append(Num)
+            Num = Num.split('-')
+            Numb = Num[0]
+            Sect = Num[1]
+            courseNum.append(Numb)
+            #print Numb
+            courseSect.append(Sect)
+            #print Sect
         for hit in row.findChildren('td', {"width": "250"}):
             #print hit.contents[0].text
             Title = hit.contents[0].text
@@ -62,33 +70,38 @@ def getCourseInfo():
             #day = str("N?A")
         try:
             time = dates[1].replace(" ","")
+            time = time.split('-')
+            startTime = time[0]
+            endTime = time[1]
         except (IndexError, TypeError, ValueError):
             time = str("")
 
         courseDay.append(day)
-        courseTime.append(time)
+        courseStart.append(startTime)
+        courseEnd.append(endTime)
 
-        """print '\n******************'
-        print Num,
+        '''print '\n******************'
+        print Num, Sect
         print day, time
-        print '******************\n' """
+        print '******************\n' '''
 
         #print hits[1].contents[0].strip()
         prof = hits[1].text.strip() #contents[0].strip()
         prof = prof.replace(r'\s{2,}',"")
         courseProf.append(prof)
-        info = str(Num)+"   "+str(Title)+"  "+str(day)+"    "+str(time)+"   "+str(prof)
+        info = str(Numb)+"   "+str(Sect)+"   "+str(Title)+"  "+str(day)+"    "+str(startTime)+"   "+str(endTime)+"   "+str(prof)
         f.write(str(info)+'\n')
 
     f.close()
 
     FILE = open("AllCourses.csv", "w")
     for i in xrange(len(courseNum)):
-        FILE.write("{};{};{};{};{}\n".format(courseNum[i],courseTitle[i],courseDay[i],courseTime[i],courseProf[i]))
+        FILE.write("{};{};{};{};{}\n".format(courseNum[i],courseSect[i],courseTitle[i],courseDay[i],courseStart[i],courseEnd[i],courseProf[i]))
     FILE.close
 
     for x in range(len(courseNum)):
-        allCourses.append( Course(courseNum[x], courseTitle[x], courseDay[x], courseTime[x], courseProf[x]) )
+        #print '+++++++++++ NEW ++++++++++++++++'
+        allCourses.append( Course(courseNum[x],courseSect[x],courseTitle[x], courseDay[x], courseStart[x], courseEnd[x], courseProf[x]) )
     print 'Made course objects'
     print len(allCourses)
     print allCourses[:3]
@@ -105,10 +118,13 @@ def findMatch(reqs):
         if results:
             print '\n Found %s section(s) for course: %s' % (len(results), code)
             matched.append(results)
-            print results
-    '''for x in range(len(matched)):
-            return matched[x]
-            print matched[x]'''
+            '''for item in results:
+                print 'ITEMS +++++++++++++++++'
+                print item.num+item.sect'''
+
+    #for x in range(len(matched)):
+            #print matched[x]
+
     return matched
 
 def filtering(b,c): # the list, attribute, criteria
@@ -129,6 +145,7 @@ def filtering(b,c): # the list, attribute, criteria
     return res
 
 def fetchAll(b,c):
+    thefile = open("remaining.txt","r")
     leftovers = thefile.read().split()
     print len(leftovers)
 
@@ -144,8 +161,8 @@ def fetchAll(b,c):
     allThings.append(match)
 
     print '__________ MATCHES FOUND _____________'
-    for code in match:
-        print code
+    #for code in match:
+        #print code
 
     filtering(b,c)
     filters = filtering(b,c)
@@ -159,3 +176,5 @@ def fetchAll(b,c):
 
     print type(everything)
     return everything
+
+getCourseInfo()

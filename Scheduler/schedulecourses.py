@@ -30,6 +30,8 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
     options = []
     SectionS = []
     lazy = None
+    File = open("selection.txt", "w")
+    FILE = open("looK_list.txt", "w")
 
     for lst in listSections:
         for code in lst:
@@ -64,7 +66,7 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
             #SectionS.append(item.num)
             #print SectionS[0:2]
 
-    SectionS = [ list(g) for k, g in groupby(SectionS, key=lambda x: x[:8]) ]
+    SectionS = [ list(g) for k, g in groupby(SectionS, key=lambda x: x) ]
     #print SectionS[0]
 
     print '++++ FINDING COMBINATIONS +++++'
@@ -81,9 +83,9 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
     print '++++ FOUND COMBINATIONS +++++'
 
     combo = sorted( Combo, key=lambda x:x[0] ) #combo.sort(key=lambda x: x[0])
-    #print combo[0]
 
-    for code in combo: #
+
+    for code in combo: #Tuple
         for item in code: #List of CourseNum
             for label in item:
                 print label #COURSE NUM
@@ -101,37 +103,57 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
     print len(look)
     print type(look[0]) #objct course !!
 
+    '''for code in look:
+        #print 'TYPE: '+str(type(code))
+        FILE.write("{};{}   ".format(code.num,code.sect))'''
+    FILE.close
+
+    print '    +++++ RES FILTER +++++++++++++ '
     for code in combo: #iterate for each requirement
         for item in code: ##new = code.translate(None,''.join(charstoremove)
-            for label in item:
+            for label[0] in item:
                 src = label
-                print type(src)
+                print str(src)
                 print '+++++++++allCourses+++++++++'
                 res = filter(lambda x:str(src) in x.num, look)
                 if res:
                     print '\n Found %s MATCH in allCourses' % (len(res))
                     list_op.append(res)
+                    for code in res:
+                        #print 'TYPE: '+str(type(code))
+                        File.write("{};{}   ".format(code.num,code.sect))
     print len(list_op)
+
+    File.close
 
     print '      ++++++++++ COMBO +++++++++++++++        '
 
     y = 0
+    #while True:
+    #    print 'SELECTING++++++++++''
+    #    selecting = random.choice([a for a in list_op if a.num[:4]])
+
     selec = random.sample(list_op, 5)
-    for item in selec:
+    for n in selec:
+        for i in n:
+            print i
+
+    '''for item in selec:
         for ids in item:
             print ids.num
+    '''
     options.append(selec)
     potential.append(options)
 
-    print '+++++++++++++++ OPTIONS[i] ++++++++++++++'
+    print '   +++++++++++++++ OPTIONS[i] ++++++++++++++    '
 
     a=0
     dets =[]
     for lst in options:
         for ids in lst:
             for labels in ids:
-                print '\n '
-                print labels.num
+                #print '\n '
+                #print labels.num
                 b = str(Course.showdets(labels))
                 dets.append(b)
     print len(dets)
