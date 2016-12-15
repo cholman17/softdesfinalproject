@@ -6,6 +6,8 @@ import schedulecourses
 from schedulecourses import *
 from audit import audit
 from re import split
+import os
+import pandas
 
 app=Flask(__name__)
 randLst = []
@@ -48,26 +50,29 @@ def make_schedule():
     tot = fetchcourses.allCourses
     total.append(tot[0:])
 
-    print len(tot)
-    print len(total)
+    print '++++++++++ FLASK DETS ++++++++++++++++'
+    #print len(tot)
+    #print len(total)
     listSect = randLst
-    print listSect
+    #print listSect
 
     option = schedulecourses.simpleRand(listSect, total)
     options = []
     for id in option:
         b=id.split(",")
-        print b
+        #print b
         c=";".join(b)
-        print c
+        #print c
         options.append(str(c))
 
-    print '++++++++++ FLASK DETS ++++++++++++++++'
     print len(options)
     print options[0]
+
+
 
     return render_template('create_schedule.html',sets=options)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
