@@ -15,3 +15,5 @@ requests==2.9.1
 
 
 Run creatingwebsite.py from the Scheduler folder to deploy
+
+Or go to this link: http://calm-escarpment-45223.herokuapp.com
