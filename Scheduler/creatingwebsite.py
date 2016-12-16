@@ -67,7 +67,7 @@ def make_schedule():
         options.append(a)
 
     print len(options)
-    print options[0]
+    #print options[0]
 
     return render_template('create_schedule.html',sets=option)
 

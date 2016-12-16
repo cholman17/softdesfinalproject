@@ -21,6 +21,11 @@ class Course(object):
         self.stress =str(stress)
         self.day = str(day)
 
+    def __eq__(self, other):
+        return self.num == other.num
+    def __hash__(self):
+        return hash(self.num)
+
     def showdets(self):
         return '%s-%s: %s, %s, %s-%s, %s' % (self.num,self.sect, self.title, self.day, self.startTime, self.endTime, self.prof)
 
@@ -38,27 +43,3 @@ class Course(object):
     def findNum(self):
         #find course number '''
         return self.num
-
-    def findSections(self):
-        return self.sect
-        pass
-
-    def SectionsTotal(self):
-        #displays number of sections offered'''
-        return len(self.sections)
-
-    def addSection(self,section):
-        #add to list of sections for specific course '''
-        if type(section) == Section:
-            self.sections.append(section)
-            return True
-        return False
-
-    def deleteSection(self, section):
-        self.sections.remove(section)
-        if len(self.sections) == 0:
-            return -1
-        return 0
-
-    def setupSections(self,newSections):
-        self.sections = newSections

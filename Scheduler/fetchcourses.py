@@ -146,6 +146,8 @@ def filtering(b,c): # the list, attribute, criteria
         results = filter(lambda x:str(c) in getattr(x,b), allCourses)
         print 'Found %s classes for %s: %s' % (len(results), b, c)
         res = [list(g) for k, g in groupby(results, key=lambda x: x.num[:7])]
+        if not results:
+            res = ""
     except NameError:
         print 'Wrong property! Try again.'
         #d.append(results)
@@ -153,18 +155,18 @@ def filtering(b,c): # the list, attribute, criteria
     return res
 
 def refresh():
-    courseNum = []
-    courseSect = []
-    courseTitle = []
-    courseDay = []
-    courseStart = []
-    courseEnd = []
-    courseProf = []
-    courseCredits = []
-    allCourses = []
+    courseNum[:] = []
+    courseSect[:] = []
+    courseTitle[:] = []
+    courseDay[:] = []
+    courseStart[:] = []
+    courseEnd[:] = []
+    courseProf[:] = []
+    courseCredits[:] = []
+    allCourses[:] = []
 
-    matched = []
-    leftovers = []
+    matched[:] = []
+    leftovers[:] = []
 
 def fetchAll(b,c):
     refresh()

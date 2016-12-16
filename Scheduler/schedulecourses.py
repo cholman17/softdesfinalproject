@@ -24,22 +24,41 @@ DONT FORGET: How to implement '???' classes for matches/remaining
 
 list_op = [] #not sure yet
 #section = raw_input('Enter all the sections of a course: ')
+new = []
+selec = []
+potential = []
+options = []
+SectionS = []
+looK = []
+look = []
+selecting = []
+
 def conflict(choice, selections):
     for lect in selections:
         print '++++ A SELECTION ++++'
         print lect
-        if choice.day == lect.day:
-            if choice.startTime == lect.startTime:
-                return True
-            if choice.endTime == lect.endTime:
-                return True
+        if choice.num != lect.num:
+            print 'Not Same Title'
+            if choice.day == lect.day:
+                if choice.startTime == lect.startTime:
+                    return True
+                if choice.endTime == lect.endTime:
+                    return True
     return False
 
 def simpleRand(listSections, tot): #listSections): #list of lists (sections)
+    SectionS = []
     new = []
     potential = []
     options = []
     SectionS = []
+    looK = []
+    look = []
+    selecting = []
+    selec = []
+
+    refresh()
+
     lazy = None
     File = open("selection.txt", "w")
     FILE = open("looK_list.txt", "w")
@@ -108,13 +127,11 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
                 pass
     #print len(combo[0])
 
-    looK = []
     for codes in tot:
         for code in codes:
             looK.append(code)
     #print looK[0]
 
-    look = []
     for items in looK:
         look.append(items)
     #print len(look)
@@ -150,7 +167,6 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
 
     y = 0
 
-    selecting = []
     for course in random.sample(list_op, len(list_op)):
         for section in course:
             print '+++++++++SELECTING++++++++++'
@@ -160,8 +176,19 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
                 print section
                 print section.day, section.startTime
                 break
+    print type(selecting)
+    print selecting
 
+    try:
+        selecting = set(selecting)
+    except TypeError:
+        print 'EXCEPT'
+        for i in selecting:
+            if i not in selec:
+                selec.append(i)
+        selecting = selec
     print len(selecting)
+    print len(selec)
     #options.append(selec)
     #potential.append(options)
 
@@ -177,6 +204,17 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
         print lect.endTime
 
     return selecting
+
+def refresh():
+    new[:] = []
+    selec[:] =[]
+    potential[:] = []
+    options[:] = []
+    SectionS[:] = []
+    looK[:] = []
+    look[:] = []
+    selecting[:] = []
+    list_op[:] = []
 
 listSec = [ #for texting
 

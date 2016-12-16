@@ -27,6 +27,7 @@ li {
         <th> Day </th>
         <th> Time </th>
         <th> Prof </th>
+        <th> Stress Factor </th>
       </tr>
     <!-- <ul> -->
     {% for found in sets%}
@@ -36,6 +37,7 @@ li {
             <td> {{found.day}} </td>
             <td> {{found.startTime}}-{{found.endTime}} </td>
             <td> {{found.prof}} </td>
+            <td> {{found.stress}} </td>
         </tr>
     {% endfor %}
     </table>
