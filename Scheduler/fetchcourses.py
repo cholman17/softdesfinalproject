@@ -10,6 +10,8 @@ from audit import * #don't think this is needed
 from creatingwebsite import * #not needed either
 from courseobjects import *
 from courseobjects import Course
+from getstress import *
+#from getstress import matching
 
 #Should make all one object class (Information)?
 #def __init__(self): pass
@@ -30,6 +32,7 @@ courseStart = []
 courseEnd = []
 courseProf = []
 courseCredits = []
+courseStress = []
 allCourses = []
 
 matched = []
@@ -89,19 +92,24 @@ def getCourseInfo():
         prof = hits[1].text.strip() #contents[0].strip()
         prof = prof.replace(r'\s{2,}',"")
         courseProf.append(prof)
-        info = str(Numb)+"   "+str(Sect)+"   "+str(Title)+"  "+str(day)+"    "+str(startTime)+"   "+str(endTime)+"   "+str(prof)
+        info = str(Numb)+"   "+str(Sect)+"   "+str(Title)+"  "+str(day)+"    "+str(startTime)+"   "+str(endTime)+"   "+str(prof)+"   "
         f.write(str(info)+'\n')
 
     f.close()
+    for x in courseNum:
+        a = getstress.matching(x)
+        courseStress.append(a)
+    print '+++++++ ADD STRESS ++++++++++'
+    print len(courseStress)
 
     FILE = open("AllCourses.csv", "w")
     for i in xrange(len(courseNum)):
-        FILE.write("{};{};{};{};{}\n".format(courseNum[i],courseSect[i],courseTitle[i],courseDay[i],courseStart[i],courseEnd[i],courseProf[i]))
+        FILE.write("{};{};{};{};{};{};{};{}'\n".format(courseNum[i],courseSect[i],courseTitle[i],courseDay[i],courseStart[i],courseEnd[i],courseProf[i], courseStress[i]))
     FILE.close
 
     for x in range(len(courseNum)):
         #print '+++++++++++ NEW ++++++++++++++++'
-        allCourses.append( Course(courseNum[x],courseSect[x],courseTitle[x], courseDay[x], courseStart[x], courseEnd[x], courseProf[x]) )
+        allCourses.append( Course(courseNum[x],courseSect[x],courseTitle[x], courseDay[x], courseStart[x], courseEnd[x], courseProf[x], courseStress[i]) )
     print 'Made course objects'
     print len(allCourses)
     print allCourses[:3]
@@ -144,7 +152,22 @@ def filtering(b,c): # the list, attribute, criteria
     #return results
     return res
 
+def refresh():
+    courseNum = []
+    courseSect = []
+    courseTitle = []
+    courseDay = []
+    courseStart = []
+    courseEnd = []
+    courseProf = []
+    courseCredits = []
+    allCourses = []
+
+    matched = []
+    leftovers = []
+
 def fetchAll(b,c):
+    refresh()
     thefile = open("remaining.txt","r")
     leftovers = thefile.read().split()
     print len(leftovers)
@@ -176,5 +199,3 @@ def fetchAll(b,c):
 
     print type(everything)
     return everything
-
-#getCourseInfo()

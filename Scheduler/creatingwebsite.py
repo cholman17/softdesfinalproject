@@ -7,7 +7,7 @@ from schedulecourses import *
 from audit import audit
 from re import split
 import os
-import pandas
+import getstress
 
 app=Flask(__name__)
 randLst = []
@@ -48,6 +48,7 @@ def get_classes():
 @app.route('/create_schedule', methods=['POST'])
 def make_schedule():
     tot = fetchcourses.allCourses
+    total = []
     total.append(tot[0:])
 
     print '++++++++++ FLASK DETS ++++++++++++++++'
@@ -73,5 +74,5 @@ def make_schedule():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True)
     #app.run(host='0.0.0.0', port=port)
+    app.run(debug=True)
