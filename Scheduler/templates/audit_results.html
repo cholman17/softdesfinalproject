@@ -11,7 +11,11 @@
     what classes you need to take, and sample schedules as well! Currently this tool
     is meant for students studying at Babson College!</p>
 
-    <p> Thanks for entering your classes. These are the classes you have left to take:</p>
+    <p> Thanks for entering your classes. These are the classes you have left to take.
+    Look through them and then press the button to generate sample schedules. </p>
+    <form action="create_schedule" method="POST">
+    <input type="submit" value="Create a schedule!">
+    </form>
 
     <ul>
       {% for req in response %}
@@ -48,6 +52,3 @@
         {% endfor %}
       {% endfor %}
     </ul>
-<form action="create_schedule" method="POST">
-<input type="submit" value="Create a schedule!">
-</form>

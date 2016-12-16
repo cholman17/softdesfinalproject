@@ -41,7 +41,13 @@ li {
         </tr>
     {% endfor %}
     </table>
-  <!-- </ul> --->
 
+  <p> To see more sample schedules, refresh page. </p>
+
+<a href="{{ url_for('index') }}">
+  <button>
+    RUN AGAIN
+  </button>
+</a>
 
     <p>{{response}}</p>
