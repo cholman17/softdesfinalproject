@@ -19,32 +19,27 @@ li {
     what classes you need to take, and sample schedules as well! Currently this tool
     is meant for students studying at Babson College!</p>
 
-    <p> Thanks for choosing to determine a schdule. Here are sample schedules for you:</p>
-
-    <ul>
+    <p> Thanks for choosing to determine a schdule. Here is a sample schedule for you:</p>
+    <table>
+      <tr>
+        <th> Course </th>
+        <th> Title </th>
+        <th> Day </th>
+        <th> Time </th>
+        <th> Prof </th>
+      </tr>
+    <!-- <ul> -->
     {% for found in sets%}
-        <li>
-            {% for code in found %}
-            {{code}}
-            {% endfor %}
-        </li>
+        <tr>
+            <td> {{found.num}}-{{found.sect}} </td>
+            <td> {{found.title}} </td>
+            <td> {{found.day}} </td>
+            <td> {{found.startTime}}-{{found.endTime}} </td>
+            <td> {{found.prof}} </td>
+        </tr>
     {% endfor %}
-  </ul>
-
-
-    <!---<ul>
-      {% for found in sets%}
-        {% for ids in found%}
-          <li>
-            {% for made in ids %}
-              {% for code in made %}
-              {{code}}
-              {% endfor %}
-            {% endfor %}
-          </li>
-        {% endfor %}
-      {% endfor %}
-    </ul> -->
+    </table>
+  <!-- </ul> --->
 
 
     <p>{{response}}</p>

@@ -177,4 +177,4 @@ def fetchAll(b,c):
     print type(everything)
     return everything
 
-getCourseInfo()
+#getCourseInfo()

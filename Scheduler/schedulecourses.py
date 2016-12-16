@@ -24,6 +24,17 @@ DONT FORGET: How to implement '???' classes for matches/remaining
 
 list_op = [] #not sure yet
 #section = raw_input('Enter all the sections of a course: ')
+def conflict(choice, selections):
+    for lect in selections:
+        print '++++ A SELECTION ++++'
+        print lect
+        if choice.day == lect.day:
+            if choice.startTime == lect.startTime:
+                return True
+            if choice.endTime == lect.endTime:
+                return True
+    return False
+
 def simpleRand(listSections, tot): #listSections): #list of lists (sections)
     new = []
     potential = []
@@ -38,6 +49,7 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
             for item in code:
                 for label in item:
                     pass
+    #print listSections
 
     print '++++++++++ STRING ++++++++++++++'
     a=0
@@ -54,20 +66,24 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
         break
 
     print str(type(lazy)) ##<class 'courseobjects.Course'>
+
     if  '<cla' in str(type(lazy)):
         print '+++++++ TRUE: COURSE OBJECT+++++++++++'
+        #for x in xrange(0, len(listSections)):
         for n in listSections: #[ [p p p ], [m m m ], [o,o o] ]
             for m in n: #[ p p p ]
                 for item in m:
                     for label in item:
-                        new.append(label)
-                        SectionS.append(label.num)
+                        #print type(label)
+                        #print label.num
+                        new.append(item)
+                        SectionS.append(label) #item.num)
             print 'CHECKING SEPARATOR'
             #SectionS.append(item.num)
             #print SectionS[0:2]
 
     SectionS = [ list(g) for k, g in groupby(SectionS, key=lambda x: x) ]
-    #print SectionS[0]
+    print SectionS[0]
 
     print '++++ FINDING COMBINATIONS +++++'
     sample = random.sample(SectionS,10)
@@ -78,7 +94,7 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
     print sample[randomSlots[0]]
 
     Combo = list(itertools.product( sample[i] for i in randomSlots) )
-    print Combo[0]
+    #print Combo[0]
     #pprint.pprint(Combo)
     print '++++ FOUND COMBINATIONS +++++'
 
@@ -88,20 +104,21 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
     for code in combo: #Tuple
         for item in code: #List of CourseNum
             for label in item:
-                print label #COURSE NUM
-    print len(combo[0])
+                #print label #COURSE NUM
+                pass
+    #print len(combo[0])
 
     looK = []
     for codes in tot:
         for code in codes:
             looK.append(code)
-    print looK[0]
+    #print looK[0]
 
     look = []
     for items in looK:
         look.append(items)
-    print len(look)
-    print type(look[0]) #objct course !!
+    #print len(look)
+    #print type(look[0]) #objct course !!
 
     '''for code in look:
         #print 'TYPE: '+str(type(code))
@@ -109,11 +126,14 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
     FILE.close
 
     print '    +++++ RES FILTER +++++++++++++ '
+
     for code in combo: #iterate for each requirement
         for item in code: ##new = code.translate(None,''.join(charstoremove)
-            for label[0] in item:
+            for label in item:
                 src = label
-                print str(src)
+                #print str(src)[:7]
+                src = str(src)[:7]
+                #print label.num
                 print '+++++++++allCourses+++++++++'
                 res = filter(lambda x:str(src) in x.num, look)
                 if res:
@@ -125,41 +145,38 @@ def simpleRand(listSections, tot): #listSections): #list of lists (sections)
     print len(list_op)
 
     File.close
-
+#Make separate fxn
     print '      ++++++++++ COMBO +++++++++++++++        '
 
     y = 0
-    #while True:
-    #    print 'SELECTING++++++++++''
-    #    selecting = random.choice([a for a in list_op if a.num[:4]])
 
-    selec = random.sample(list_op, 5)
-    for n in selec:
-        for i in n:
-            print i
+    selecting = []
+    for course in random.sample(list_op, len(list_op)):
+        for section in course:
+            print '+++++++++SELECTING++++++++++'
+            if not conflict(section,selecting):
+                selecting.append(section)
+                print '__________ NO CONFLICT __________'
+                print section
+                print section.day, section.startTime
+                break
 
-    '''for item in selec:
-        for ids in item:
-            print ids.num
-    '''
-    options.append(selec)
-    potential.append(options)
+    print len(selecting)
+    #options.append(selec)
+    #potential.append(options)
 
     print '   +++++++++++++++ OPTIONS[i] ++++++++++++++    '
 
     a=0
-    dets =[]
-    for lst in options:
-        for ids in lst:
-            for labels in ids:
-                #print '\n '
-                #print labels.num
-                b = str(Course.showdets(labels))
-                dets.append(b)
-    print len(dets)
-    for n in dets:
-        print n
-    return dets
+    #dets =[]
+    for lect in selecting:
+        print '++++++++++++++++++++'
+        print lect.num
+        print lect.day
+        print lect.startTime
+        print lect.endTime
+
+    return selecting
 
 listSec = [ #for texting
 
